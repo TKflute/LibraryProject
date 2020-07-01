@@ -10,12 +10,14 @@ import java.util.List;
 
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.model.Book;
+import com.cognixia.jump.model.Book;
 
 public class BookDao {
 
 	public static final Connection conn = ConnectionManager.getConnection();
 	
 	private static String SELECT_ALL_BOOKS = "select * from book";
+	 private static String SELECT_BOOK_BY_ID = "select * from book where isbn = ?";
 	private static String UPDATE_BOOKS = "update book set title = ?, descr = ? where isbn = ?";
 	private static String INSERT_BOOKS = "insert into book(isbn, title, descr, rented, added_to_library) values(?, ?, ?, ?, ?)";
 	
@@ -28,7 +30,7 @@ public class BookDao {
 			
 			while(rs.next()) {
 				
-				int isbn = rs.getInt("isbn");
+				String isbn = rs.getString("isbn");
 				String title = rs.getString("title");
 				String descr = rs.getString("descr");
 				boolean rented = rs.getBoolean("rented");
@@ -44,6 +46,34 @@ public class BookDao {
 		
 		return allBooks;
 	}
+	
+	 public Book getBookById(String isbn) {
+	        
+	        Book book = null;
+	        
+	        try(PreparedStatement pstmt = conn.prepareStatement(SELECT_BOOK_BY_ID)) {
+	            
+	            pstmt.setString(1, isbn);
+	            
+	            ResultSet rs = pstmt.executeQuery();
+	            
+	            // if patron found, if statement run, if not null returned as Book
+	            if(rs.next()) {
+	                
+	                String title = rs.getString("title");
+	                String descr = rs.getString("descr");
+	                boolean rented = rs.getBoolean("rented");
+	                Date added_to_library = rs.getDate("added_to_library");
+	                
+	                book = new Book(isbn, title, descr, rented, added_to_library);
+	            }
+	            
+	        } catch(SQLException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return book;
+	    }
 	
 	public boolean updateBook(Book book) {
 		
@@ -68,7 +98,7 @@ public class BookDao {
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(INSERT_BOOKS)) {
 			
-			pstmt.setInt(1, book.getIsbn());
+			pstmt.setString(1, book.getIsbn());
 			pstmt.setString(2, book.getTitle());
 			pstmt.setString(3, book.getDescr());
 			pstmt.setBoolean(4, book.isRented());

@@ -9,13 +9,14 @@ import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.model.PatronModel;
 
 public class PatronDao {
+	
 public static final Connection conn = ConnectionManager.getConnection();
     
     private static String SELECT_ALL_Patron = "select * from patron"; // add
-    private static String SELECT_PATRON_BY_ID = "select * from patron where id = ?";
-    private static String INSERT_PATRON = "insert into patron(accountFrozen, firstName, lastName, userName,passWord) values(?, ?, ?,?,?)";
-    private static String DELETE_PATRON = "delete from patron where id = ?";
-    private static String UPDATE_PATRON = "update patron set accountFrozen = ?,firstName = ?, lastName=?, userName = ?, passWord = ? where id = ?";
+    private static String SELECT_PATRON_BY_ID = "select * from patron where patron_id = ?";
+    private static String INSERT_PATRON = "insert into patron(first_name, last_name, username, password, account_frozen) values(?,?,?,?,?)";
+    private static String DELETE_PATRON = "delete from patron where patron_id = ?";
+    private static String UPDATE_PATRON = "update patron set first_name = ?, last_name=?, username = ?, password = ?, account_frozen = ? where patron_id = ?";
     
     public List<PatronModel> getAllPatronModel() {
         
@@ -26,16 +27,16 @@ public static final Connection conn = ConnectionManager.getConnection();
             
             while(rs.next()) { 
                 
-                int id = rs.getInt("id");
-                boolean accountFrozen = rs.getBoolean("accountFrozen");
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String userName = rs.getString("userName");
-                String passWord = rs.getString("passWord");
+                int patron_id = rs.getInt("patron_id"); 
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                boolean account_frozen = rs.getBoolean("account_frozen");
                 
-                //PatronModel patron = new PatronModel(id, passWord, firstName, lastName, userName,accountFrozen);
+                //PatronModel patron = new PatronModel(patron_id, password, first_name, last_name, username,account_frozen);
                 //AllPatronModel.add(patron);
-                AllPatronModel.add(new PatronModel(id, passWord, firstName, lastName, userName,accountFrozen));
+                AllPatronModel.add(new PatronModel(patron_id, first_name, last_name, username, password, account_frozen));
                 
             }
             
@@ -45,26 +46,26 @@ public static final Connection conn = ConnectionManager.getConnection();
         
         return AllPatronModel;
     }
-    public PatronModel getPatrontById(int id) {
+    public PatronModel getPatronById(int patron_id) {
         
         PatronModel patronModel = null;
         
         try(PreparedStatement pstmt = conn.prepareStatement(SELECT_PATRON_BY_ID)) {
             
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, patron_id);
             
             ResultSet rs = pstmt.executeQuery();
             
             // if patron found, if statement run, if not null returned as Patron
             if(rs.next()) {
-            
-                boolean accountFrozen = rs.getBoolean("accountFrozen");
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String userName = rs.getString("userName");
-                String passWord = rs.getString("passWord");
                 
-                 patronModel = new PatronModel(id, passWord, firstName, lastName, userName,accountFrozen);
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                boolean account_frozen = rs.getBoolean("account_frozen");
+                
+                patronModel = new PatronModel(patron_id, first_name, last_name, username, password, account_frozen);
             }
             
         } catch(SQLException e) {
@@ -78,13 +79,11 @@ public static final Connection conn = ConnectionManager.getConnection();
         
         try(PreparedStatement pstmt = conn.prepareStatement(INSERT_PATRON)) {
             
-            
-            
-            pstmt.setBoolean(1,patronModel.isAccountFrozen());
-            pstmt.setString(2, patronModel.getFirstName());
-            pstmt.setString(3, patronModel.getLastName());
-            pstmt.setString(4, patronModel.getUserName());
+            pstmt.setString(1, patronModel.getFirstName());
+            pstmt.setString(2, patronModel.getLastName());
+            pstmt.setString(3, patronModel.getUserName());
             pstmt.setString(4, patronModel.getPassWord());
+            pstmt.setBoolean(5 ,patronModel.isAccountFrozen());
             
             // at least one row added
             if(pstmt.executeUpdate() > 0) {
@@ -98,9 +97,9 @@ public static final Connection conn = ConnectionManager.getConnection();
         return false;
     }
     
-    public boolean deletePatronModel(int id) {
+    public boolean deletePatronModel(int patron_id) {
         try (PreparedStatement pstmt = conn.prepareStatement(DELETE_PATRON)) {
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, patron_id);
             // at least one row deleted
             if (pstmt.executeUpdate() > 0) {
                 return true;
@@ -116,11 +115,13 @@ public static final Connection conn = ConnectionManager.getConnection();
     public boolean updatePatronModel(PatronModel patronModel) {
         
         try (PreparedStatement pstmt = conn.prepareStatement(UPDATE_PATRON)) {
-            pstmt.setBoolean(1,patronModel.isAccountFrozen());
-            pstmt.setString(2, patronModel.getFirstName());
-            pstmt.setString(3, patronModel.getLastName());
-            pstmt.setString(4, patronModel.getUserName());
+        	
+            pstmt.setString(1, patronModel.getFirstName());
+            pstmt.setString(2, patronModel.getLastName());
+            pstmt.setString(3, patronModel.getUserName());
             pstmt.setString(4, patronModel.getPassWord());
+            pstmt.setBoolean(5,patronModel.isAccountFrozen());
+            pstmt.setInt(6, patronModel.getId());
             // at least one row updated
             if (pstmt.executeUpdate() > 0) {
                 return true;

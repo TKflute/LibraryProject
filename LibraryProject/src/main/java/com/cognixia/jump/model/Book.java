@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class Book {
 
-	private int isbn;
+	private String isbn;
 	private String title;
 	private String descr;
 	private boolean rented;
 	private Date added_to_libray;
 	
-	public Book(int isbn, String title, String descr, boolean rented, Date added_to_libray) {
+	public Book(String isbn, String title, String descr, boolean rented, Date added_to_libray) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -19,11 +19,11 @@ public class Book {
 		this.added_to_libray = added_to_libray;
 	}
 
-	public int getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
