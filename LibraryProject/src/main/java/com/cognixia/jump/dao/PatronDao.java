@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.model.PatronModel;
+
 public class PatronDao {
 public static final Connection conn = ConnectionManager.getConnection();
     
@@ -15,6 +16,7 @@ public static final Connection conn = ConnectionManager.getConnection();
     private static String INSERT_PATRON = "insert into patron(accountFrozen, firstName, lastName, userName,passWord) values(?, ?, ?,?,?)";
     private static String DELETE_PATRON = "delete from patron where id = ?";
     private static String UPDATE_PATRON = "update patron set accountFrozen = ?,firstName = ?, lastName=?, userName = ?, passWord = ? where id = ?";
+    
     public List<PatronModel> getAllPatronModel() {
         
         List<PatronModel> AllPatronModel = new ArrayList<PatronModel>();
@@ -22,9 +24,7 @@ public static final Connection conn = ConnectionManager.getConnection();
         try(PreparedStatement pstmt = conn.prepareStatement(SELECT_ALL_Patron);
                 ResultSet rs = pstmt.executeQuery() ) {
             
-            while(rs.next()) {
-                
-                
+            while(rs.next()) { 
                 
                 int id = rs.getInt("id");
                 boolean accountFrozen = rs.getBoolean("accountFrozen");
@@ -73,6 +73,7 @@ public static final Connection conn = ConnectionManager.getConnection();
         
         return patronModel;
     }
+    
     public boolean addPatronModel(PatronModel patronModel) {
         
         try(PreparedStatement pstmt = conn.prepareStatement(INSERT_PATRON)) {
