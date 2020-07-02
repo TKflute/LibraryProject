@@ -1,9 +1,10 @@
 package com.cognixia.jump.controller;
 
 import java.io.IOException;
+
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ public class LoginServlet extends HttpServlet {
 		
 		patronDao = new PatronDao();
 		librarianDao = new LibrarianDao();
+		bookDao = new BookDao();
 	}
 
 	
@@ -61,6 +63,9 @@ public class LoginServlet extends HttpServlet {
 		case "/patron":
 			goToPatron(request, response);
 			break;
+		case "/checkout-list":
+			goToBookList(request, response);
+			break;
 		case "/add":
 			addNewBook(request, response);
 			break;
@@ -91,6 +96,22 @@ public class LoginServlet extends HttpServlet {
 		
 	}
 	
+	private void goToBookList(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+
+		List<Book> allBooks = bookDao.getAllBooks();
+		System.out.println("All books: " + allBooks);
+		
+		request.setAttribute("allBook", allBooks);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		
+		dispatcher.forward(request, response);
+		
+		
+	}
+	
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
@@ -107,7 +128,7 @@ public class LoginServlet extends HttpServlet {
 		bookDao.addBook(book);
 		
 		//Redirect to our product list
-		response.sendRedirect("list");
+		response.sendRedirect("book-list");
 	}
 	
 	

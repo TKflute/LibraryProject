@@ -22,15 +22,22 @@
 	    	value="<c:out value='${ book.title }' />" required>
 	  </div>
 	  <div class="form-group">
-	    <label for="qty">Description</label>
+	    <label for="description">Description</label>
 	    <input type="text" class="form-control" id="description" name="description"
-	    	value="<c:out value='${ book.descr }' />" required>
+	    	value="<c:out value='${ book.descr }' />" required>  	
 	  </div>
 	  <div class="form-group">
-	    <c:if test="${ book == null }">
-			<%-- hidden input, won't show up on the page, but will pass our id for the product --%>
-			<input type="hidden" name="rented" value="<c:out value='${ book.rented }' />">
+	    <c:if test="${ book != null }">
+			<%-- hidden input, won't show up on the page, but will pass our date_added for the book being updated--%>
+			<% %><input type="hidden" name="added_to_library" value="<c:out value='${ book.added_to_library }' />">
 		</c:if>
+	  </div>
+	  <div class="form-group">
+	    <%-- <c:if test="${ book == null }">
+	    TODO: ERROR: Null pointer here
+			-- hidden input, won't show up on the page, but will pass our id for the product --
+			<input type="hidden" name="rented" value="<c:out value='${ book.rented }' />">
+		</c:if>--%>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Submit</button>
 	</form>

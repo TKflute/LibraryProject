@@ -24,11 +24,11 @@
 	    <ul class="navbar-nav">
 	    
 	      <li class="nav-item">
-	        <a class="nav-link" href="<%= request.getContextPath() %>/list">View Books</a>
+	        <a class="nav-link" href="<%= request.getContextPath() %>/book-list">View Books</a>
 	      </li>
 	      
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Add/Edit Books</a>
+	        <a class="nav-link" href="<%= request.getContextPath() %>/add-book">Add/Edit Books</a>
 	      </li>
 	      
 	    </ul>

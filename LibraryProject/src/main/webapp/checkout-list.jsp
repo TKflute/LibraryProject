@@ -1,4 +1,4 @@
-<%--@ include file="header.jsp" --%>
+<%@ include file="header.jsp" %>
 
 <h1>Your Books History</h1>
 	
@@ -53,4 +53,4 @@
 			
 	</table>
 
-<%--@ include file="footer.jsp" --%>
+<%@ include file="footer.jsp" %>

@@ -1,4 +1,4 @@
-<%--@ include file="header.jsp" --%>
+<%@ include file="header.jsp" %>
 
 <div class="container">
 
@@ -22,21 +22,21 @@
 			<c:forEach var="book" items="${ allBook }">
 			
 				<tr>
-					<td><c:out value="${ book.idbin }" /></td>
+					<td><c:out value="${ book.isbn }" /></td>
 
 					<td><c:out value="${ book.title }" /></td>
 
 					<td><c:out value="${ book.descr }" /></td>
 
 					<td><c:out value="${ book.rented }" /></td>
-					<td><c:out value="${ book.added_to_libary}" /></td>
+					<td><c:out value="${ book.added_to_library}" /></td>
 
 					<td>
-						<a href="edit?id=<c:out value='${ book.isbin }' />">
+						<a href="edit?id=<c:out value='${ book.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 								
 						</a> &nbsp;&nbsp;&nbsp;&nbsp; <a
-							href="delete?id=<c:out value='${ book.isbin}' />">
+							href="delete?id=<c:out value='${ book.isbn}' />">
 								<button class="btn btn-danger">Delete</button>
 						</a>
 					</td>
@@ -49,4 +49,4 @@
 </div>
 
 
-<%--@ include file="footer.jsp" --%>
+<%@ include file="footer.jsp" %>

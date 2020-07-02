@@ -8,15 +8,15 @@ public class Book {
 	private String title;
 	private String descr;
 	private boolean rented;
-	private Date added_to_libray;
+	private Date added_to_library;
 	
-	public Book(String isbn, String title, String descr, boolean rented, Date added_to_libray) {
+	public Book(String isbn, String title, String descr, boolean rented, Date added_to_library) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
 		this.descr = descr;
 		this.rented = rented;
-		this.added_to_libray = added_to_libray;
+		this.added_to_library = added_to_library;
 	}
 
 	public String getIsbn() {
@@ -52,17 +52,17 @@ public class Book {
 	}
 
 	public Date getAdded_to_libray() {
-		return added_to_libray;
+		return added_to_library;
 	}
 
 	public void setAdded_to_libray(Date added_to_libray) {
-		this.added_to_libray = added_to_libray;
+		this.added_to_library = added_to_libray;
 	}
 
 	@Override
 	public String toString() {
 		return "Book [isbn=" + isbn + ", title=" + title + ", descr=" + descr + ", rented=" + rented
-				+ ", added_to_libray=" + added_to_libray + "]";
+				+ ", added_to_libray=" + added_to_library + "]";
 	}
 	
 	
