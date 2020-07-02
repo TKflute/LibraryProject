@@ -3,5 +3,26 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>Library Application</display-name>
+  
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>com.cognixia.jump.controller.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>PatronServlet</servlet-name>
+  	<servlet-class>com.cognixia.jump.controller.PatronServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>PatronServlet</servlet-name>
+  	<url-pattern>/PatronServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
