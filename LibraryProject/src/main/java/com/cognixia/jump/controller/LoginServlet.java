@@ -96,7 +96,7 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		//Grab values to create product from our form
-		int isbn = Integer.parseInt(request.getParameter("isbn").trim());
+		String isbn = request.getParameter("isbn").trim();
 		String title = request.getParameter("title").trim();
 		String descr = request.getParameter("descr").trim();
 		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
