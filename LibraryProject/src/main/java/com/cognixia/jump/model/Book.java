@@ -51,18 +51,18 @@ public class Book {
 		this.rented = rented;
 	}
 
-	public Date getAdded_to_libray() {
+	public Date getAdded_to_library() {
 		return added_to_library;
 	}
 
-	public void setAdded_to_libray(Date added_to_libray) {
-		this.added_to_library = added_to_libray;
+	public void setAdded_to_library(Date added_to_library) {
+		this.added_to_library = added_to_library;
 	}
 
 	@Override
 	public String toString() {
 		return "Book [isbn=" + isbn + ", title=" + title + ", descr=" + descr + ", rented=" + rented
-				+ ", added_to_libray=" + added_to_library + "]";
+				+ ", added_to_library=" + added_to_library + "]";
 	}
 	
 	
