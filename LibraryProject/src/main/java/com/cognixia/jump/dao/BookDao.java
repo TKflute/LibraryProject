@@ -104,7 +104,7 @@ public class BookDao {
 			pstmt.setString(2, book.getTitle());
 			pstmt.setString(3, book.getDescr());
 			pstmt.setBoolean(4, book.isRented());
-			pstmt.setDate(5, book.getAdded_to_libray());
+			pstmt.setDate(5, book.getAdded_to_library());
 			
 			// at least one row added
 			if(pstmt.executeUpdate() > 0) {
