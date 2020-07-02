@@ -99,10 +99,9 @@ public class LoginServlet extends HttpServlet {
 		String isbn = request.getParameter("isbn").trim();
 		String title = request.getParameter("title").trim();
 		String descr = request.getParameter("descr").trim();
-		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		
 		//Create object for our product
-		Book book = new Book(isbn, title, descr, false, added_to_library);
+		Book book = new Book(isbn, title, descr, false, new Date(System.currentTimeMillis()));
 		
 		//Call Dao to add product to our database
 		bookDao.addBook(book);
